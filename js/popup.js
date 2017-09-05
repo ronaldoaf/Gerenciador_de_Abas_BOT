@@ -1,26 +1,21 @@
 
 $(document).ready(function() {
 	chrome.storage.sync.get('bot_ligado', function(obj) { 
+		
 		if (obj.bot_ligado==true) $('#cmn-toggle-1').prop('checked', true);
+	
+
 	});
 	
 
 	$("#cmn-toggle-1").change(function() {
-		if(!this.checked) {
-			chrome.storage.sync.get({bot_ligado: true});
+		if(this.checked) {
+			chrome.storage.sync.set({bot_ligado: true});
 		}
 		else{
-			chrome.storage.sync.get({bot_ligado: false});
+			chrome.storage.sync.set({bot_ligado: false});
 		}
 	});
-	
-	
-	setInterval(function(){
-
-		
-		
-	},1000);
-	
 	
 	
 	/*
