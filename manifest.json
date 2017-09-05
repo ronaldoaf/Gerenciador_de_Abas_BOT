@@ -13,7 +13,7 @@
    },
    "manifest_version": 2,
    "name": "Teste Abas",
-   "permissions": [ "webNavigation","tabs", "chrome://favicon/" ],
+   "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/" ],
    "version": "1.0.1",
    "web_accessible_resources": [ "images/*" ],
    "background": {
