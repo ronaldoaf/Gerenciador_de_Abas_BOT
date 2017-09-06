@@ -13,10 +13,17 @@
    },
    "manifest_version": 2,
    "name": "Teste Abas",
-   "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/" ],
+   "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/","https://mobile.365sport365.com/*, http://aposte.me/*" ],
    "version": "1.0.1",
    "web_accessible_resources": [ "images/*" ],
    "background": {
     "scripts": ["js/jquery-2.1.4.min.js","js/background.js"]
-  }
+  },
+   "content_scripts": [
+    {
+      "matches": ["https://mobile.365sport365.com/*"],
+      "css": ["css/content.css"],
+      "js": ["js/jquery-2.1.4.min.js", "js/content.js"]
+    }
+  ]
 }
