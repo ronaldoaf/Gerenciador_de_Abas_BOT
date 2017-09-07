@@ -1,3 +1,12 @@
+
+$(document).ready(function(){
+
+
+//Se não estiver numa tela de Coupon, não faz nada
+//if (!location.hash.includes('Coupon')) return;
+
+
+
 //Faz a conversão para as funções do Tampermonkey
 function GM_setValue(key, value){
 	localStorage[key]=value;	
@@ -38,6 +47,18 @@ function ns(texto){
 unsafeWindow.jQuery.fn.extend({rclick:function(){var a=function(a,b){return Math.round((a+b)/2)},b={x1:$(this).offset().left,y1:$(this).offset().top,x2:$(this).offset().left+$(this).width(),y2:$(this).offset().top+$(this).height()},c=function(a,b){var c=document.createEvent("MouseEvent"),d=document.elementFromPoint(a,b);c.initMouseEvent("click",!0,!0,unsafeWindow,null,a,b,0,0,!1,!1,!1,!1,0,null),d.dispatchEvent(c)};c(a(b.x1,b.x2),a(b.y1,b.y2))}});
 
 
+function verificaSenhaSalva(){
+    if((localStorage.senha_bet365==undefined) || (localStorage.senha_bet365=='') ){
+        $('body').html('<center><br><div style="font-size:18px; border:1px solid"><br><p>Digite o seu usuário da Bet365</p><br><input id="usuario" /><br><p>Digite a sua senha da Bet365</p><br><input id="senha" /><button id="salvar_senha">Salvar</button><br><br></div></center>');
+        $('#salvar_senha').click(function(){
+              localStorage.senha_bet365=$('#senha').val();
+			  localStorage.usuario_bet365=$('#usuario').val();
+              location.reload();
+        });
+    }
+}
+verificaSenhaSalva();
+
 
 
 function atualizaQuantidadeDeJogos(){
@@ -48,9 +69,9 @@ function atualizaQuantidadeDeJogos(){
 			   'Accept': "*/*; charset=utf-8",
 		   },
 		   onload: function(response){
-		   	GM_setValue('n_jogo',response.responseText);		   
+		   	GM_setValue('n_jogo',response);		   
 		   }
-      	    }); 	
+      	}); 	
 }
 
 function login(){
@@ -66,8 +87,8 @@ function login(){
    }else{
       if($('.mmhdr-UserInfo_UserName').text()==''){
          $('.hm-HeaderLinkLogin_Launcher').click();
-         $('#PopUp_UserName').val('ronaldoaf');
-         $('#PopUp_Password').val('rr842135');
+         $('#PopUp_UserName').val(localStorage['usuario_bet365']);
+         $('#PopUp_Password').val(localStorage['senha_bet365']);
          $('#PopUp_KML').val('on');
          $('#LogInPopUpBttn').click();
       }
@@ -76,6 +97,12 @@ function login(){
 
 function verificaErroDeLogin(){   
 }
+
+
+
+
+
+
 
 
 atualizaQuantidadeDeJogos();
@@ -99,16 +126,24 @@ bot.copiado_betslip=false
 
 
 bot.stake=function(){
-    var soma=0;
-	$( bot.textMyBets.match(/VA=[0-9\.]+/g) ).each(function(i,e){
-		soma+=Number(e.split('=')[1]);
-	});
+	myBetsList=JSON.parse(localStorage['myBetsList']);
+	
 
+	
+	
+    var soma=0;
+	//$( bot.textMyBets.match(/VA=[0-9\.]+/g) ).each(function(i,e){
+	//	soma+=Number(e.split('=')[1]);
+	//});
+	$(myBetsList).each(function(){
+		soma+=this.cash_out_return;		
+	});
+	
 	soma+=bot.balance; 
 
-        n_jogo=Number( GM_getValue('n_jogo') );
-        if (n_jogo<=30.0) n_jogo=30.0;
-        percent=0.21/(n_jogo*0.10);  
+	n_jogo=Number( GM_getValue('n_jogo') );
+	if (n_jogo<=30.0) n_jogo=30.0;
+	percent=0.21/(n_jogo*0.10);  
       
     
 	
@@ -168,7 +203,16 @@ bot.jogoLive = function (home,away){
 };
 
 bot.jaFoiApostado=function(home,away){
-    return bot.textMyBets.includes(home+' v '+away);
+	myBetsList=JSON.parse(localStorage['myBetsList']);
+	
+	$(myBetsList).each(function(){
+		return (   (this.match==home+' v '+away) && (this.mercado.includes('Handicap'))    );
+		
+	});
+	
+	
+    
+	//return bot.textMyBets.includes(home+' v '+away);
 };
 
 
@@ -190,8 +234,8 @@ bot.onLoadStats=function(response){
    bot.lista_de_apostas=[];
    
    //console.log(response);
-   var jogos=eval(response.responseText);
-   //console.log(jogos);
+   var jogos=eval(response);
+   console.log(jogos);
 
    //Se o flag bot.apostando_agora estiver true, não tenta aposta
    if(bot.apostando_agora) return;
@@ -264,11 +308,8 @@ bot.on30segs=function(){
 			   'Accept': "*/*; charset=utf-8",
 		   },
 		   onload: function(response){
-             //Pega a lista de apostas ativas
-             $.get('https://mobile.365sport365.com/mybets/mybetsdata.ashx?pt=0&tl=OPENBETS%3B__time&ci=28', function(data){ 
-                bot.textMyBets=data;
-                bot.onLoadStats(response);
-             });    
+			 bot.onLoadStats(response);   
+			    
              
 			//Pega o valor da banca disponível
             $.get('https://mobile.365sport365.com/Controls/BetSlip/GetBalance.aspx',function(data){ 
@@ -411,3 +452,6 @@ window.setInterval(function(){
     atualizaQuantidadeDeJogos();
     window.location.reload();
 },15*60*1000);
+
+
+});
