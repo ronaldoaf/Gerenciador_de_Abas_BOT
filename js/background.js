@@ -39,20 +39,3 @@ $(document).ready(function(){
 
 
 
-chrome.runtime.onMessage.addListener(function(msg,a,b) {
-	console.log(msg);
-	
-    if (msg.command == "GET") {
-		
-		$.get(msg.parm1,function(res){
-			chrome.runtime.sendMessage({command:'GET_RESPONSE', res: res },function(res){
-				
-				
-			});
-	    });
-	}
-});
-
-
-
-

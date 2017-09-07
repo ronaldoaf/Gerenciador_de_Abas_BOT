@@ -17,13 +17,13 @@
    "version": "1.0.1",
    "web_accessible_resources": [ "images/*" ],
    "background": {
-    "scripts": ["js/jquery-2.1.4.min.js","js/background.js"]
+    "scripts": ["js/jquery-2.1.4.min.js","js/GET_background.js","js/background.js"]
   },
    "content_scripts": [
     {
       "matches": ["https://mobile.365sport365.com/*"],
       "css": ["css/content.css"],
-      "js": ["js/jquery-2.1.4.min.js", "js/content.js"]
+      "js": ["js/jquery-2.1.4.min.js", "js/GET_content.js","js/content.js"]
     }
   ]
 }
