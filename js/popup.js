@@ -21,13 +21,13 @@ $(document).ready(function() {
 	
 	
 	
-	$('button').click(function(){
+	$('#apaga').click(function(){
 		chrome.tabs.query({},function(tabs){
 			$(tabs).each(function(){		
 				if (this.url.includes('151014714C1_1_3')) chrome.tabs.executeScript(this.id, {code:"localStorage.removeItem('usuario_bet365');  localStorage.removeItem('senha_bet365');  "});
 			});
 		});	
-		
+
 		setTimeout(function(){
 			chrome.runtime.sendMessage({command:'RELOAD'});			
 		},1000);
@@ -35,5 +35,30 @@ $(document).ready(function() {
 		
 	});
 	
+	var config;
+	
+	chrome.storage.sync.get('config', function (result) {  
+		if (result=={}) {
+			config={
+				percent:0.01,
+				t1:25,
+				t2:70,
+				ind1:1.75,
+				ind2:1.75
+			};		
+			chrome.storage.sync.set({config:config});
+		} else{
+			config=result.config;	
+		}
+
+		$('#config').val(JSON.stringify(config,null,4)  );
+	});
+	
+	
+	
+	$('#salva').click(function(){
+		console.log('foi');
+		chrome.runtime.sendMessage({command:'SALVA_CONFIG', parm1: $('#config').val()  });
+	});	
 	
 });

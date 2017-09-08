@@ -23,6 +23,15 @@ chrome.runtime.onMessage.addListener(function(msg) {
 			});	
 		});
 	}
+	
+    if (msg.command == "SALVA_CONFIG") {
+		chrome.storage.sync.set({config:JSON.parse(msg.parm1)  });
+		//console.log(JSON.parse(msg.parm1));
+	}
+	
+	
+	
+	
 });
 
 
@@ -52,7 +61,22 @@ $(document).ready(function(){
 				if (!includes_list(tab_urls, '151017012C1_1_3') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=Coupon;key=151017012C1_1_3;'});
 				if (!includes_list(tab_urls, 'MyBets') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=MyBets;key=;ip=0;lng=1'});
 				
-			});		
+			});
+			
+			chrome.tabs.query({},function(tabs){
+			$(tabs).each(function(){
+				var tab_id=this.id;
+				if (this.url.includes('151014714C1_1_3')) {
+					chrome.storage.sync.get('config', function (result) {  
+						config=result.config;
+						chrome.tabs.executeScript(tab_id, {code:"localStorage.config='"+JSON.stringify(config)+"'"});
+					});					
+				}
+			});
+		});	
+
+
+			
 		}
 		else{
 			chrome.browserAction.setIcon({path: 'images/logo_32.png'});		
@@ -78,6 +102,10 @@ $(document).ready(function(){
 		}		
 		
 	},30*60*1000);
+	
+	
+	
+
 	
 	
 	

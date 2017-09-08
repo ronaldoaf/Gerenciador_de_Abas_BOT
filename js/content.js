@@ -1,3 +1,5 @@
+var CONFIG;
+
 
 $(document).ready(function(){
 
@@ -126,7 +128,7 @@ bot.stake=function(){
 
 	n_jogo=Number( GM_getValue('n_jogo') );
 	if (n_jogo<=30.0) n_jogo=30.0;
-	percent=0.21/(n_jogo*0.10);  
+	percent=CONFIG.percent/(n_jogo*0.10);  
       
     
 	
@@ -188,11 +190,12 @@ bot.jogoLive = function (home,away){
 bot.jaFoiApostado=function(home,away){
 	myBetsList=JSON.parse(localStorage['myBetsList']);
 	
-	$(myBetsList).each(function(){
-		return (   (this.match==home+' v '+away) && (this.mercado.includes('Handicap'))    );
+	var retorno=false;
+	$(myBetsList).each(function(){		
+		if ( (this.match==home+' v '+away) && (this.mercado.includes('Handicap'))    )  retorno=true;
 		
 	});
-	
+	return retorno;
 	
     
 	//return bot.textMyBets.includes(home+' v '+away);
@@ -211,14 +214,13 @@ bot.apostar=function(selObj){
 
 
 
-
 //---Toda vez que as estatisticas do arquivo JSON forem carregadas
 bot.onLoadStats=function(response){
    bot.lista_de_apostas=[];
    
    //console.log(response);
    var jogos=eval(response);
-   console.log(jogos);
+   //console.log(jogos);
 
    //Se o flag bot.apostando_agora estiver true, não tenta aposta
    if(bot.apostando_agora) return;
@@ -249,7 +251,8 @@ bot.onLoadStats=function(response){
                     
                  
 					//Aposta no Home
-				 	     if (( ( jogo.ind>=1.75 ) &&  ( jogo.ind2>=1.00) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }
+						if (( ( jogo.ind>=CONFIG.ind1 ) &&  ( jogo.ind2>=CONFIG.ind2) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }
+				 	     //if (( ( jogo.ind>=1.75 ) &&  ( jogo.ind2>=1.00) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }
 					     //if (( ( jogo.ind>=4.50 ) &&  ( jogo.ind2>=3.50) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=20)) ||  (segundoTempo() && (jogo_selecionado.tempo>=70))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
 					//else if (( ( jogo.ind>=3.50 ) &&  ( jogo.ind2>=2.50) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=24)) ||  (segundoTempo() && (jogo_selecionado.tempo>=76))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
                     //else if (( ( jogo.ind>=2.50 ) &&  ( jogo.ind2>=1.50) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=28)) ||  (segundoTempo() && (jogo_selecionado.tempo>=82))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 				
@@ -257,7 +260,8 @@ bot.onLoadStats=function(response){
 					//else if (( ( jogo.ind>=1.25 ) &&  ( jogo.ind2>=1.00) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=38)) ||  (segundoTempo() && (jogo_selecionado.tempo>=88))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
 					
 					//Aposta no Away
-				 	      if (( ( jogo.ind<=-1.75 ) &&  ( jogo.ind2<=-1) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
+						   if (( ( jogo.ind<=-CONFIG.ind1 ) &&  ( jogo.ind2<=-CONFIG.ind2) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
+				 	      //if (( ( jogo.ind<=-1.75 ) &&  ( jogo.ind2<=-1) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
 					     //if (( ( jogo.ind<=-4.50 ) &&  ( jogo.ind2<=-3.50) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=20)) ||  (segundoTempo() && (jogo_selecionado.tempo>=70))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }	                       
 					//else if (( ( jogo.ind<=-3.50 ) &&  ( jogo.ind2<=-2.50) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=24)) ||  (segundoTempo() && (jogo_selecionado.tempo>=76))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }	  
 				   // else if (( ( jogo.ind<=-2.50 ) &&  ( jogo.ind2<=-1.50) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=28)) ||  (segundoTempo() && (jogo_selecionado.tempo>=82))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }  
@@ -319,6 +323,10 @@ unsafeWindow.setInterval(function(){
 	if ( !primeiroTempo() && !segundoTempo() ) return;
 	
 	
+	CONFIG=JSON.parse(localStorage.config);
+	
+	
+	//console.log(CONFIG);
 	
 	time_=Math.floor( (+new Date) /1000);
     
