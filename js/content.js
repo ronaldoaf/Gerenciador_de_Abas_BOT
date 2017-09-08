@@ -53,7 +53,9 @@ function verificaSenhaSalva(){
         $('#salvar_senha').click(function(){
               localStorage.senha_bet365=$('#senha').val();
 			  localStorage.usuario_bet365=$('#usuario').val();
-              location.reload();
+              //location.reload();
+			  chrome.runtime.sendMessage({command:'RELOAD'});
+			  
         });
     }
 }
@@ -74,26 +76,7 @@ function atualizaQuantidadeDeJogos(){
       	}); 	
 }
 
-function login(){
-   if ( $('.hm-LoginPrompt_Fail').css('display')=='block' ){
-      GM_xmlhttpRequest({
-         method: "GET",
-         url: "http://aposte.me/live/alerta.php",
-         onload: function(res){
-            $('body').html(res);
-         }
-      });
-      
-   }else{
-      if($('.mmhdr-UserInfo_UserName').text()==''){
-         $('.hm-HeaderLinkLogin_Launcher').click();
-         $('#PopUp_UserName').val(localStorage['usuario_bet365']);
-         $('#PopUp_Password').val(localStorage['senha_bet365']);
-         $('#PopUp_KML').val('on');
-         $('#LogInPopUpBttn').click();
-      }
-   }
-};
+
 
 function verificaErroDeLogin(){   
 }
@@ -321,22 +304,21 @@ bot.on30segs=function(){
 
 
 
-//Modo interativo
-bot.interativo=function(){
-   GM_xmlhttpRequest({
-	   method: "GET",
-	   url: "http://aposte.me/live/in.php?t="+time_,
-	   onload: function(response){
-			eval(response);
-	   }
-   }); 	
-};
 
 
 
 //Loop Principal repete todos os comandos a cada 1 segund
 unsafeWindow.setInterval(function(){
-	if (location.hash)
+	
+	//Senão estiver logado, loga
+	login();
+	
+	
+	
+	//Se não tiver nos Coupon de Asian Handicap sai fora
+	if ( !primeiroTempo() && !segundoTempo() ) return;
+	
+	
 	
 	time_=Math.floor( (+new Date) /1000);
     
@@ -436,9 +418,7 @@ unsafeWindow.setInterval(function(){
     
     
     
-	//Senão estiver logado, loga
-	login();
-	verificaErroDeLogin();
+
 	
 	//Abre os mercados colapsados
 	$('.ipe-Market:not(:has(.ipe-MarketContainer ))').each(function(i,e){ $(e).click() })

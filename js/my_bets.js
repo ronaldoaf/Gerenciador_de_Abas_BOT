@@ -11,6 +11,8 @@ console.log('MyBets');
 
 //Loope principal
 setInterval(function(){
+	login();
+	
 	//Se não estiver no Live Now, coloca 
 	if ( $('.myb-OpenBetFallbackHeader_DropDownSelector').text()!='Live Now' ) $('.myb-OpenBetFallbackHeader_Button:contains(Live Now)').click();
 	

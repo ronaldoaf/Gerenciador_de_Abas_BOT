@@ -4,7 +4,7 @@
       "default_popup": "popup.html",
       "default_title": "Bot365 v2"
    },
-   "description": "Bot365 v2",
+   "description": "Bot para fazer asian handicap live, com a estratégia do Seu Cuca",
    "icons": {
       "128": "images/logo_128.png",
       "16": "images/logo_16.png",
@@ -12,7 +12,7 @@
       "64": "images/logo_64.png"
    },
    "manifest_version": 2,
-   "name": "Teste Abas",
+   "name": "Bot365 v2",
    "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/","https://mobile.365sport365.com/*, http://aposte.me/*" ],
    "version": "2.0.0",
    "web_accessible_resources": [ "images/*" ],
@@ -23,7 +23,7 @@
     {
       "matches": ["https://mobile.365sport365.com/*"],
       "css": ["css/content.css"],
-      "js": ["js/jquery-2.1.4.min.js", "js/GET_content.js","js/content.js","js/my_bets.js"]
+      "js": ["js/jquery-2.1.4.min.js", "js/login.js","js/GET_content.js","js/content.js","js/my_bets.js"]
     }
   ]
 }

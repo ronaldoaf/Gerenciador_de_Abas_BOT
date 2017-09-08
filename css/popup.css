@@ -1,3 +1,12 @@
+#container{
+	width:130px;
+}
+
+hr {
+	border-top: 3px double #8c8b8b;
+
+}
+
 .cmn-toggle {
   position: absolute;
   margin-left: -9999px;
