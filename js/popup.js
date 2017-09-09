@@ -38,7 +38,8 @@ $(document).ready(function() {
 	var config;
 	
 	chrome.storage.sync.get('config', function (result) {  
-		if (result=={}) {
+		
+		if ($.isEmptyObject(result)) {			
 			config={
 				percent:0.01,
 				t1:25,
@@ -46,7 +47,8 @@ $(document).ready(function() {
 				ind1:1.75,
 				ind2:1.75
 			};		
-			chrome.storage.sync.set({config:config});
+			chrome.storage.sync.set({config:config});		
+			
 		} else{
 			config=result.config;	
 		}
