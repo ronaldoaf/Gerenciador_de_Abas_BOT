@@ -126,8 +126,9 @@ bot.stake=function(){
 	
 	soma+=bot.balance; 
 
-	n_jogo=Number( GM_getValue('n_jogo') );
-	if (n_jogo<=30.0) n_jogo=30.0;
+	//n_jogo=Number( GM_getValue('n_jogo') );
+	//if (n_jogo<=30.0) n_jogo=30.0;
+	n_jogo=30.0;
 	percent=CONFIG.percent/(n_jogo*0.10);  
       
     
