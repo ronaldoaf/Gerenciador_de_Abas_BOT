@@ -41,11 +41,11 @@ $(document).ready(function() {
 		
 		if ($.isEmptyObject(result)) {			
 			config={
-				percent:0.01,
+				percent:0.10,
 				t1:25,
 				t2:70,
 				ind1:1.75,
-				ind2:1.75
+				ind2:1.00
 			};		
 			chrome.storage.sync.set({config:config});		
 			
