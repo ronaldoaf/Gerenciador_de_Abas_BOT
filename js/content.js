@@ -241,6 +241,9 @@ bot.onLoadStats=function(response){
 		   
 			 if(  (ns(jogo.home)==ns(home)) && (ns(jogo.away)==ns(away)) ){
 				   
+				   //Se a aba myBets não foi atualiza nos últimos 2 segundos sai;
+				   if( ( +new Date() ) - Number(localStorage.myBetsLastUpdate) >2000) return;
+				   
 				   //Se já houve aposta nesse jogo sai.
 				   if( bot.jaFoiApostado(home,away) ) return;
 				   

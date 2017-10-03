@@ -28,7 +28,7 @@ setInterval(function(){
 
 	});
 	localStorage['myBetsList']=JSON.stringify(myBetsList);
-	
+	localStorage['myBetsLastUpdate']=(+new Date());
 	
 	
 	
