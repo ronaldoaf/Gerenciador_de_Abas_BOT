@@ -128,14 +128,14 @@ bot.stake=function(){
 
 	//n_jogo=Number( GM_getValue('n_jogo') );
 	//if (n_jogo<=30.0) n_jogo=30.0;
-	n_jogo=30.0;
-	percent=CONFIG.percent/(n_jogo*0.10);  
+	//n_jogo=30.0;
+	//percent=CONFIG.percent/(n_jogo*0.10);  
       
     
 	
 	
 	
-	return (Math.floor(soma*percent)+0.5);
+	return (Math.floor(soma*bot.percent)+0.5);
 };
 
 bot.jogoLive = function (home,away){
@@ -205,9 +205,11 @@ bot.jaFoiApostado=function(home,away){
 
 
 
-bot.apostar=function(selObj){
-	 bot.apostando_agora=true;	 
+bot.apostar=function(selObj, percent_banca){
+	 bot.apostando_agora=true;	
+	 bot.percent=percent_banca;
 	 selObj.click();
+	 
 
 };
 
@@ -251,11 +253,17 @@ bot.onLoadStats=function(response){
 				   jogo_selecionado=bot.jogoLive(home,away);
                    
 
-                 
+					if (Math.abs(jogo_selecionado.AH_Home)>0 ){
+						percent_banca=CONFIG.percent_025;
+					}
+					else{
+						if (primeiroTempo()) percent_banca=CONFIG.percent_1st;
+						if (segundoTempo())  percent_banca=CONFIG.percent_2nd;
+					}
                     
                  
 					//Aposta no Home
-						if (( ( jogo.ind>=CONFIG.ind1 ) &&  ( jogo.ind2>=CONFIG.ind2) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gHm==0.0) && ( jogo.rH==0.0) &&  ( jogo.gAf-jogo.gHf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }
+						if (( ( jogo.ind>=CONFIG.ind1 ) &&  ( jogo.ind2>=CONFIG.ind2) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gHm==0.0) && ( jogo.rH==0.0) &&  ( jogo.gAf-jogo.gHf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome, percent_banca); return;}
 				 	     //if (( ( jogo.ind>=1.75 ) &&  ( jogo.ind2>=1.00) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }
 					     //if (( ( jogo.ind>=4.50 ) &&  ( jogo.ind2>=3.50) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=20)) ||  (segundoTempo() && (jogo_selecionado.tempo>=70))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
 					//else if (( ( jogo.ind>=3.50 ) &&  ( jogo.ind2>=2.50) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=24)) ||  (segundoTempo() && (jogo_selecionado.tempo>=76))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
@@ -264,7 +272,7 @@ bot.onLoadStats=function(response){
 					//else if (( ( jogo.ind>=1.25 ) &&  ( jogo.ind2>=1.00) && 	( jogo_selecionado.AH_Home>=0)  &&  ( jogo.gH==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=38)) ||  (segundoTempo() && (jogo_selecionado.tempo>=88))    ) )) { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selHome); }	 
 					
 					//Aposta no Away
-						   if (( ( jogo.ind<=-CONFIG.ind1 ) &&  ( jogo.ind2<=-CONFIG.ind2) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gAm==0.0) && ( jogo.rA==0.0) &&  ( jogo.gHf-jogo.gAf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
+						   if (( ( jogo.ind<=-CONFIG.ind1 ) &&  ( jogo.ind2<=-CONFIG.ind2) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gAm==0.0) && ( jogo.rA==0.0) &&  ( jogo.gHf-jogo.gAf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway,percent_banca); return;}
 				 	      //if (( ( jogo.ind<=-1.75 ) &&  ( jogo.ind2<=-1) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=25)) ||  (segundoTempo() && (jogo_selecionado.tempo>=75))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
 					     //if (( ( jogo.ind<=-4.50 ) &&  ( jogo.ind2<=-3.50) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=20)) ||  (segundoTempo() && (jogo_selecionado.tempo>=70))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }	                       
 					//else if (( ( jogo.ind<=-3.50 ) &&  ( jogo.ind2<=-2.50) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gA==0.0) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=24)) ||  (segundoTempo() && (jogo_selecionado.tempo>=76))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }	  

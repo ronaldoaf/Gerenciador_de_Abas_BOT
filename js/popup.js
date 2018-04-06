@@ -41,7 +41,9 @@ $(document).ready(function() {
 		
 		if ($.isEmptyObject(result)) {			
 			config={
-				percent:0.10,
+				percent_1st:0.015,
+				percent_2nd:0.040,
+				percent_025:0.1,
 				t1:25,
 				t2:70,
 				ind1:1.75,
