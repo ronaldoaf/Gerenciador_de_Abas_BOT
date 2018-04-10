@@ -16,7 +16,8 @@ chrome.runtime.onMessage.addListener(function(msg) {
 		chrome.tabs.query({},function(tabs){
 			$(tabs).each(function(){		
 				if (
-					this.url.includes('151014714C1_1_3') || 
+					this.url.includes('Goalline') ||
+					this.url.includes('Handicap') || 					
 					this.url.includes('151017012C1_1_3') || 
 					this.url.includes('MyBets') 
 				) chrome.tabs.reload(this.id);
@@ -57,7 +58,8 @@ $(document).ready(function(){
 				$(tabs).each(function(){
 					tab_urls.push(this.url);		
 				});	
-				if (!includes_list(tab_urls, '151014714C1_1_3') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=Coupon;key=151014714C1_1_3;'});
+				if (!includes_list(tab_urls, 'Goalline') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=Coupon;key=151014714C1_1_3;Goalline'});
+				if (!includes_list(tab_urls, 'Handicap') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=Coupon;key=151014714C1_1_3;Handicap'});
 				if (!includes_list(tab_urls, '151017012C1_1_3') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=Coupon;key=151017012C1_1_3;'});
 				if (!includes_list(tab_urls, 'MyBets') ) chrome.tabs.create({url:'https://mobile.365sport365.com/#type=MyBets;key=;ip=0;lng=1'});
 				
@@ -92,9 +94,10 @@ $(document).ready(function(){
 			chrome.tabs.query({},function(tabs){			
 				$(tabs).each(function(){		
 					if (
-						this.url.includes('151014714C1_1_3') || 
-						this.url.includes('151017012C1_1_3') || 
-						this.url.includes('MyBets') 
+					this.url.includes('Goalline') ||
+					this.url.includes('Handicap') || 					
+					this.url.includes('151017012C1_1_3') || 
+					this.url.includes('MyBets') 
 					) chrome.tabs.remove(this.id);
 				});	
 				
