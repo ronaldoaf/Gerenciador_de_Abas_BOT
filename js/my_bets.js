@@ -36,5 +36,8 @@ setInterval(function(){
 },1000);
 
 
+setInterval(function(){
+    location.reload();
+},3*60*1000 );
 	
 });
