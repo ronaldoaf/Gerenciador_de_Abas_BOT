@@ -49,11 +49,11 @@ setInterval(function(){
 	
 	for(var i=0; i<myBetsList.length-1; i++){		
 		if(myBetsList[i].mercado+myBetsList[i].match==myBetsList[i+1].mercado+myBetsList[i+1].match){
-			$('.myb-OpenBetItem:contains('+myBetsList[i].mercado+'):contains('+myBetsList[i].match+'):eq(0) .myb-CloseBetButton_Return').click();
+			$('.myb-OpenBetItem:contains('+myBetsList[i].mercado+'):contains('+myBetsList[i].match+'):eq(0) .myb-CloseBetButton_Button').click();
 			setTimeout(function(){
-				$('.myb-OpenBetItem:contains('+myBetsList[i].mercado+'):contains('+myBetsList[i].match+'):eq(0) .myb-CloseBetButton_Return').dblclick();
-			},500);
-			
+				$('.myb-OpenBetItem:contains('+myBetsList[i].mercado+'):contains('+myBetsList[i].match+'):eq(0) .myb-CloseBetButton_Button').click();
+			},1000);
+			break;
 			setTimeout(function(){
 				location.reload();
 			},15000)
