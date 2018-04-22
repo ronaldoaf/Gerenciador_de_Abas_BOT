@@ -106,9 +106,8 @@ unsafeWindow.bot={};
 
 bot.apostando_agora=false;
 bot.betslipBarEnhanced_selecionado=false;
-bot.copiado_betslip=false
-
-
+bot.copiado_betslip=false;
+bot.referBet=0;
 
 bot.stake=function(){
 	myBetsList=JSON.parse(localStorage['myBetsList']);
@@ -296,7 +295,8 @@ bot.onLoadStats=function(response){
 //---A cada 30 segundos
 bot.on30segs=function(){		
        console.log('on30segs');
-	     
+	   
+	   
 	
 	
 	   //Faz um ajax para o arquivo JSON "http://aposte.me/live/stats.php"
@@ -399,21 +399,14 @@ unsafeWindow.setInterval(function(){
 	   //Clica em "Place Bet"
 	   $('.placeBet:not(.disabled) button').click();	 
 	  
-		
-	    
-	    /*		
-	   if ($('.referDialogue').size()>0){
-		   
-		  
-		   bot.aposta_maxima=Math.floor(Number( $('.referCanBePlaced .referValue').text() ))-1.5;
-		   $('a:contains(Back to Bet Slip)').click();		   
-		   setTimeout(function(){
-			   $('input.stk').val(bot.maxima_aposta);			   
-		   },1000); 
-		   
-		   
-	   }
-	   */	
+	   //Se aparecer o referBet clica e depois de 25 segundos recarrega a pagina
+	   if ( ($('a:contains(Place Bet and Refer)').size()>0) &&  (bot.referBet==0)) {
+			bot.referBet=1;
+			$('a:contains(Place Bet and Refer)').click();
+			setTimeout(function(){
+				location.reload();
+			},25000);
+		}
 		
 		
 	   //Clica em Continue
