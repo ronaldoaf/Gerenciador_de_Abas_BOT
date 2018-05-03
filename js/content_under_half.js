@@ -339,6 +339,8 @@ unsafeWindow.setInterval(function(){
 	
 	CONFIG=JSON.parse(localStorage.config);
 	
+	//Clica no botao "Stay Logged In" em caso do Reality Checks estiver habilitado
+	if($("div:contains(Stay Logged In)").size()==1) $("div:contains(Stay Logged In)").click();
 	
 	//console.log(CONFIG);
 	
