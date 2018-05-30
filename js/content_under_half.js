@@ -248,20 +248,23 @@ bot.onLoadStats=function(response){
 					//Aposta no Under
 					goalline=jogo_selecionado.AH_Away;
                     
-                    
+                     var probUnder=1.0/j_sel.odds_Under/(1.0/j_sel.odds_Under + 1.0/j_sel.odds_Over);
 					//if (( ( jogo.ind<=-CONFIG.ind1 ) &&  ( jogo.ind2<=-CONFIG.ind2) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gAm==0.0) && ( jogo.rA==0.0) &&  ( jogo.gHf-jogo.gAf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
-					var INDICE1=0.0005 *(j.daHf+j.daAf) + 0.0129*(j.soHf+j.soAf) + 0.0114 * (j.sfHf+j.sfAf) + 0.0104*(j.cHf+j.cAf) + 0.043*(j.gHf+j.gAf) -0.183*(goalline -  (j.gHf+j.gAf));
+					//var INDICE1=0.0005 *(j.daHf+j.daAf) + 0.0129*(j.soHf+j.soAf) + 0.0114 * (j.sfHf+j.sfAf) + 0.0104*(j.cHf+j.cAf) + 0.043*(j.gHf+j.gAf) -0.183*(goalline -  (j.gHf+j.gAf));
+                    var INDICE1=-0.0005 *(j.daHf+j.daAf) -0.0068*(j.soHf+j.soAf+j.sfHf+j.sfAf) -0.0029*(j.cHf+j.cAf) -0.0251*(j.gHf+j.gAf) +0.095*(goalline -  (j.gHf+j.gAf)) -0.3609*probUnder +0.1552;
+                    //-0.0251 * sg +
 
+                    
                     var goalline_mod=goalline % 1;
-                    var probUnder=1.02/j_sel.odds_Under/(1.02/j_sel.odds_Under + 0.98/j_sel.odds_Over);
+                   
+                   console.log([home, away, INDICE1]);
                     
-                    var INDICE2=-0.473*INDICE1 -0.034*goalline_mod -0.1839*probUnder;
-                    console.log(home, away,INDICE2 );
+
                     //Se o não atingir o indice mínimo não aposta
-                    if( INDICE2 <  CONFIG.minimo_indice_para_apostar) return;
+                    if( INDICE1 <  CONFIG.minimo_indice_para_apostar) return;
                     
                     
-                    var media_retorno=1.8328*INDICE2+0.0742;
+                    var media_retorno=INDICE1;
                     
                     var variancia_retorno=tabela_de_variancias[goalline_mod];
                     
