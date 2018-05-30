@@ -40,17 +40,10 @@ $(document).ready(function() {
 	chrome.storage.sync.get('config', function (result) {  
 		
 		if ($.isEmptyObject(result)) {			
-			config={
-				percent_1st:0.015,
-				percent_2nd:0.040,
-				percent_025:0.1,
-				t1:25,
-				t2:70,
-				ind1:1.75,
-				ind2:1.00,				
-				minimo_indice_para_apostar:-0.035,
-				percentual_de_kelly:0.5,
-				maximo_da_banca_por_aposta:0.15
+			config={		
+				minimo_indice_para_apostar:0.02,
+				percentual_de_kelly:0.33,
+				maximo_da_banca_por_aposta:0.10
 			};		
 			chrome.storage.sync.set({config:config});		
 			
