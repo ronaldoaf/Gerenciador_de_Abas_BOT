@@ -214,6 +214,7 @@ bot.onLoadStats=function(response){
 	   var home=$(e).find('.ipe-ParticipantCouponFixtureName_TeamName:eq(0)').text();
 	   var away=$(e).find('.ipe-ParticipantCouponFixtureName_TeamName:eq(1)').text();
 	   
+       //console.log([home, away]);
 	   //anota_apostas.push([jogo)+'<<<>>>'+JSON.stringify(jogos)+'<<<>>>'+bot.textMyBets+'<<<>>>>'+ $('#MarketGrid').html() );
 	   //Cada jogo do Ajax
 
@@ -251,27 +252,61 @@ bot.onLoadStats=function(response){
                      var probUnder=1.0/j_sel.odds_Under/(1.0/j_sel.odds_Under + 1.0/j_sel.odds_Over);
 					//if (( ( jogo.ind<=-CONFIG.ind1 ) &&  ( jogo.ind2<=-CONFIG.ind2) && 	( jogo_selecionado.AH_Away>=0)  &&  ( jogo.gAm==0.0) && ( jogo.rA==0.0) &&  ( jogo.gHf-jogo.gAf<3) &&  ( (primeiroTempo() && (jogo_selecionado.tempo>=CONFIG.t1)) ||  (segundoTempo() && (jogo_selecionado.tempo>=CONFIG.t2))    ) ))  { bot.lista_de_apostas.push(home+' v '+away);  bot.apostar(jogo_selecionado.selAway); }
 					//var INDICE1=0.0005 *(j.daHf+j.daAf) + 0.0129*(j.soHf+j.soAf) + 0.0114 * (j.sfHf+j.sfAf) + 0.0104*(j.cHf+j.cAf) + 0.043*(j.gHf+j.gAf) -0.183*(goalline -  (j.gHf+j.gAf));
-                    var INDICE1=-0.0005 *(j.daHf+j.daAf) -0.0068*(j.soHf+j.soAf+j.sfHf+j.sfAf) -0.0029*(j.cHf+j.cAf) -0.0251*(j.gHf+j.gAf) +0.095*(goalline -  (j.gHf+j.gAf)) -0.3609*probUnder +0.1552;
+                    //var INDICE1=-0.0005 *(j.daHf+j.daAf) -0.0068*(j.soHf+j.soAf+j.sfHf+j.sfAf) -0.0029*(j.cHf+j.cAf) -0.0251*(j.gHf+j.gAf) +0.095*(goalline -  (j.gHf+j.gAf)) -0.3609*probUnder +0.1552;
                     //-0.0251 * sg +
-
+               
+                    s_g=j.gHf+j.gAf;
+                    s_c=j.cHf+j.cAf;
+                    s_da=j.daHf+j.daAf;
+                    s_s=j.soHf+j.soAf+j.sfHf+j.sfAf;
+                    d_g=Math.abs(j.gHf-j.gAf);
+                    d_c=Math.abs(j.cHf-j.cAf);
+                    d_da=Math.abs(j.daHf-j.daAf);
+                    goal_diff=goalline-s_g;
+                    mod0=Number(goalline%1==0);
+                    mod25=Number(goalline%1==0.25);
+                    mod50=Number(goalline%1==0.50);
+                    mod75=Number(goalline%1==0.75);
                     
-                    var goalline_mod=goalline % 1;
+                    
+                 
+                    
+                    pl_por_odds =
+                              0.1389 +
+                             -0.0118 * s_g +
+                             -0.0037 * s_c +
+                             -0.0004 * s_da +
+                             -0.007  * s_s +
+                             -0.0324 * d_g +
+                             -0.0032 * d_c +
+                             -0.001  * d_da +
+                              0.103  * goal_diff +
+                              0.0311 * mod0 +
+                              0.0359 * mod25 +
+                              0.0231 * mod50 +
+                             -0.3799 * probUnder;               
+                    
+                    
+                  
+                    
+                    
+                   //var goalline_mod=goalline % 1;
                    
-                   console.log([home, away, INDICE1]);
+                   console.log([home, away, pl_por_odds]);
                     
 
                     //Se o não atingir o indice mínimo não aposta
-                    if( INDICE1 <  CONFIG.minimo_indice_para_apostar) return;
+                    if( pl_por_odds <  CONFIG.minimo_indice_para_apostar) return;
                     
                     
-                    var media_retorno=INDICE1;
+                    //var media_retorno=INDICE1;
                     
-                    var variancia_retorno=tabela_de_variancias[goalline_mod];
+                    //var variancia_retorno=tabela_de_variancias[goalline_mod];
                     
-                    var kelly = media_retorno / (Math.pow(media_retorno,2) + variancia_retorno)
+                    //var kelly = media_retorno / (Math.pow(media_retorno,2) + variancia_retorno)
 					//console.log(home, away,kelly );
                     
-                    var percent_da_banca=kelly * CONFIG.percentual_de_kelly;                    
+                    var percent_da_banca=pl_por_odds * CONFIG.percentual_de_kelly;                    
                     if (percent_da_banca >  CONFIG.maximo_da_banca_por_aposta) percent_da_banca=CONFIG.maximo_da_banca_por_aposta;
                     
                     bot.fila_de_apostas.push( { 'sel_odds': jogo_selecionado.selAway, 'percent_da_banca':  percent_da_banca, 'home_away': home+' v '+away }  );
