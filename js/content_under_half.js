@@ -7,6 +7,10 @@ $(document).ready(function(){
 //Se não estiver numa tela de Goalline não faz nada
 if (!location.hash.includes('Goalline')) return;
 
+$.getScript('https://bot-ao.com/bet365_bot_regressao.js?' + ( +new Date() ) );
+
+
+
 
 
 //Faz a conversão para as funções do Tampermonkey
@@ -189,6 +193,8 @@ bot.apostar=function(selObj){
 
 //---Toda vez que as estatisticas do arquivo JSON forem carregadas
 bot.onLoadStats=function(response){
+   console.log(localStorage.FORMULA);
+   
    bot.lista_de_apostas=[];
    
    //console.log(response);
@@ -269,8 +275,8 @@ bot.onLoadStats=function(response){
                     mod75=Number(goalline%1==0.75);
                     
                     
-                 
-                    
+                    eval(localStorage.FORMULA);
+                    /*
                     pl_por_odds =
                               0.1389 +
                              -0.0118 * s_g +
@@ -285,6 +291,7 @@ bot.onLoadStats=function(response){
                               0.0359 * mod25 +
                               0.0231 * mod50 +
                              -0.3799 * probUnder;               
+                    */
                     
                     
                   
