@@ -268,12 +268,19 @@ bot.onLoadStats=function(response){
                     d_g=Math.abs(j.gHf-j.gAf);
                     d_c=Math.abs(j.cHf-j.cAf);
                     d_da=Math.abs(j.daHf-j.daAf);
+                    d_s=Math.abs( (j.soHf+j.sfHf)-(j.soAf+j.sfAf) );
+                    goal=goalline;
                     goal_diff=goalline-s_g;
+                    oddsU=1.0*j_sel.odds_Under;
+                    probU=probUnder;
+                    probU_diff=Math.abs( probUnder-0.5 );
                     mod0=Number(goalline%1==0);
                     mod25=Number(goalline%1==0.25);
                     mod50=Number(goalline%1==0.50);
                     mod75=Number(goalline%1==0.75);
                     
+                    
+                    // $s_g,$s_c,$s_da,$s_s,$d_g,$d_c,$d_da,$d_s,$goal,$goal_diff,$oddsU,$probU,$probU_diff,$mod0,$mod25,$mod50,$mod75
                     
                     eval(localStorage.FORMULA);
                     /*
