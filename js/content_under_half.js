@@ -279,10 +279,18 @@ bot.onLoadStats=function(response){
                     mod50=Number(goalline%1==0.50);
                     mod75=Number(goalline%1==0.75);
                     
-                    
+					gf=j.gf;
+					g2h=j.g2h;
+                    gl=j.gl;
+					gld=j.gld;
+					
                     // $s_g,$s_c,$s_da,$s_s,$d_g,$d_c,$d_da,$d_s,$goal,$goal_diff,$oddsU,$probU,$probU_diff,$mod0,$mod25,$mod50,$mod75
-                    
-                    eval(localStorage.FORMULA);
+                    if (gl>0) {
+						eval(localStorage.FORMULA2);
+					}
+					else{
+						eval(localStorage.FORMULA);
+					}
                     /*
                     pl_por_odds =
                               0.1389 +
