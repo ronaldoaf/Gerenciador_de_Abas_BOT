@@ -12,7 +12,7 @@
       "64": "images/logo_64.png"
    },
    "manifest_version": 2,
-   "name": "Bot365 v2",
+   "name": "Bot365 v2.6",
    "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/","https://mobile.365sport365.com/*, http://bot-ao.com/*" ],
    "version": "2.6.0",
    "web_accessible_resources": [ "images/*" ],
