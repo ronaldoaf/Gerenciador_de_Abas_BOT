@@ -7,7 +7,7 @@ $(document).ready(function(){
 //Se não estiver numa tela de Goalline não faz nada
 if (!location.hash.includes('Goalline')) return;
 
-$.getScript('https://clanvila/bot/bet365_bot_regressao.js?' + ( +new Date() ) );
+$.getScript('https://bot-ao.com/bet365_bot_regressao.js?' + ( +new Date() ) );
 
 
 
@@ -279,18 +279,10 @@ bot.onLoadStats=function(response){
                     mod50=Number(goalline%1==0.50);
                     mod75=Number(goalline%1==0.75);
                     
-					gf=j.gf;
-					g2h=j.g2h;
-                    gl=j.gl;
-					gld=j.gld;
-					
+                    
                     // $s_g,$s_c,$s_da,$s_s,$d_g,$d_c,$d_da,$d_s,$goal,$goal_diff,$oddsU,$probU,$probU_diff,$mod0,$mod25,$mod50,$mod75
-                    if (gl>0) {
-						eval(localStorage.FORMULA2);
-					}
-					else{
-						eval(localStorage.FORMULA);
-					}
+                    
+                    eval(localStorage.FORMULA);
                     /*
                     pl_por_odds =
                               0.1389 +
@@ -356,20 +348,20 @@ bot.onLoadStats=function(response){
 //---A cada 30 segundos
 bot.on30segs=function(){		
        console.log('on30segs');
-	    console.log('oi');
+	     
 	
 	
 	   //Faz um ajax para o arquivo JSON "http://aposte.me/live/stats.php"
 	   GM_xmlhttpRequest({
 		   method: "GET",
-		   url: "http://clanvila.ml/bot/stats.json?t="+time_,
+		   url: "http://bot-ao.com/stats.json?t="+time_,
 		   headers: { 
 			   'Accept': "*/*; charset=utf-8",
 		   },
 		   onload: function(response){
 			 bot.onLoadStats(response);   
 			    
-            
+             
 			//Pega o valor da banca disponível
             $.get('https://mobile.365sport365.com/Controls/BetSlip/GetBalance.aspx',function(data){ 
                    bot.balance=Number(data.balance); 
