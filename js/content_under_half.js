@@ -280,7 +280,7 @@ bot.onLoadStats=function(response){
                     
                     // $s_g,$s_c,$s_da,$s_s,$d_g,$d_c,$d_da,$d_s,$goal,$goal_diff,$oddsU,$probU,$probU_diff,$mod0,$mod25,$mod50,$mod75
                     
-                    eval(localStorage.FORMULA);
+                    eval(localStorage.FORMULA2);
 					//plU_por_odds =    0.1466 +     -0.0852 * s_g +     -0.0057 * s_c +     -0.0009 * s_da +     -0.0058 * s_s +     -0.0388 * d_g +     -0.0024 * d_c +     -0.0005 * d_da +      0.0856 * goal +     -0.2696 * probU +     -0.2946 * probU_diff +      0.0138 * mod0 +      0.007  * mod25 +      0.0186 * mod50;
 					
 					//plO_por_odds =   -0.285  +      0.1033 * s_g +      0.0054 * s_c +      0.0006 * s_da +      0.0069 * s_s +      0.0371 * d_g +      0.0025 * d_c +      0.0006 * d_da +      0.002  * d_s +     -0.1012 * goal +      0.9538 * oddsO +     -3.1751 * probU +     -0.5596 * probU_diff +     -0.0231 * mod25 +     -0.0399 * mod50;
