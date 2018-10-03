@@ -14,17 +14,21 @@ var myBetsList;
 setInterval(function(){
 	login();
 	
-	//Se não estiver no Live Now, coloca 
-	if ( $('.myb-OpenBetFallbackHeader_DropDownSelector').text()!='Unsettled' ) $('.myb-OpenBetFallbackHeader_Button:contains(Unsettled)').click();
+	//Se não estiver no Unsettled, coloca 
+	if($('div.myb-MyBetsHeader_Button:contains(Unsettled).myb-MyBetsHeader_ButtonSelected').size()==0) $('div.myb-MyBetsHeader_Button:contains(Unsettled)').click();
 	
 	
 	myBetsList=[];
 	
 	$('.myb-OpenBetItem').each(function(){  
+		//if(!$(this).hasClass('myb-OpenBetItem_Open')) $(this).click();
+	
+		if ($(this).find('.myb-OpenBetParticipant_MarketDescriptionText').size()==0) $(this).click();
+		
 		myBetsList.push({
-			mercado: $(this).find('.myb-OpenBetParticipant_MarketDescription').text(),
+			mercado: $(this).find('.myb-OpenBetParticipant_MarketDescriptionText').text(),
             match: $(this).find('.myb-OpenBetParticipant_FixtureDescription').clone().children().remove().end().text(),	
-			cash_out_return: Number($(this).find('.myb-CloseBetButton_Return').text().split(' ')[0]),
+			cash_out_return: Number($(this).find('.myb-CloseBetButtonBase_Return').text().split(' ')[0]),
 			obj: $(this)
 		});
 
@@ -35,6 +39,7 @@ setInterval(function(){
 		return a.mercado+a.match>b.mercado+b.match ? 1 :-1;
 	});
 	
+	//console.log(myBetsList);
 	localStorage['myBetsList']=JSON.stringify(myBetsList);
 	localStorage['myBetsLastUpdate']=(+new Date());
 	
@@ -43,6 +48,7 @@ setInterval(function(){
 },1000);
 
 
+/*
 //Se encontrar alguma aposta duplicada tenta fazer o cash out e reiniciar
 setInterval(function(){
 
@@ -61,7 +67,7 @@ setInterval(function(){
 	}
 
 },20000);
-
+*/
 
 //Reinicia a aba mybets a cada 3 minutos
 setInterval(function(){
