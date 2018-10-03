@@ -362,7 +362,7 @@ bot.on30segs=function(){
 	   //Faz um ajax para o arquivo JSON "http://aposte.me/live/stats.php"
 	   GM_xmlhttpRequest({
 		   method: "GET",
-		   url: "http://bot-ao.com/stats.json?t="+time_,
+		   url: "http://bot-ao.com/stats1.json?t="+time_,
 		   headers: { 
 			   'Accept': "*/*; charset=utf-8",
 		   },
