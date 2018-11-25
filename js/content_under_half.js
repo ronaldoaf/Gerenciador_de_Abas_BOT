@@ -12,6 +12,7 @@ $.waitFor=function(elemento, func){
 	
 }
 
+=0
 
 
 $(document).ready(function(){
@@ -311,7 +312,12 @@ bot.onLoadStats=function(response){
         
                     eval(localStorage.FORMULA2);
 	
-                   
+
+				   plU_por_odds=plU_por_odds/variancias[ mod0 ? 'u00': (mod25 ? 'u25': (mod50 ? 'u50': 'u75'))];
+				   
+				   plO_por_odds=plO_por_odds/variancias[ mod0 ? 'o00': (mod25 ? 'o25': (mod50 ? 'o50': 'o75'))];
+				   
+				   
                    console.log([home, away, plU_por_odds, plO_por_odds]);
                     
 
