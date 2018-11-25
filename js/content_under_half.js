@@ -233,7 +233,6 @@ bot.apostar=function(selObj, percent_da_banca){
 
 //---Toda vez que as estatisticas do arquivo JSON forem carregadas
 bot.onLoadStats=function(response){
-   console.log(localStorage.FORMULA);
    
    bot.apostando_agora=false;
    //bot.lista_de_apostas=[];
