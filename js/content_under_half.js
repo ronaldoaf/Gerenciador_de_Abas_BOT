@@ -12,7 +12,18 @@ $.waitFor=function(elemento, func){
 	
 }
 
-=0
+var variancias={
+	o00:0.42,
+	o25:0.90,
+	o50:0.89,
+	o75:0.68,
+	
+	u00:0.52,
+	u25:0.64,
+	u50:0.88,
+	u75:0.89	
+};
+
 
 
 $(document).ready(function(){
