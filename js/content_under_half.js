@@ -281,8 +281,7 @@ bot.onLoadStats=function(response){
                    if( (jogo.rHf+jogo.rAf )>0) return;   
                    //Se quase não tiver ataque perigosos sai, porque pode ser um jogo com erro nos dados
                    if( (jogo.daHf+jogo.daAf )<5) return;  
-                   //Se já tiver um diferença de 3 gols mais gols sai
-                   if( Math.abs(jogo.gHf-jogo.gAf )>=3) return;                      
+                                   
                    //Se já houve aposta nesse jogo sai.
 				   if( bot.jaFoiApostado(home,away) ) return;   
                    
@@ -332,7 +331,7 @@ bot.onLoadStats=function(response){
                     
 
                     //Se o não atingir o indice mínimo não aposta
-                    if( (plU_por_odds <  CONFIG.minimo_indice_para_apostar) && (plO_por_odds <  CONFIG.minimo_indice_para_apostar)	  ) return;
+                    //if( (plU_por_odds <  CONFIG.minimo_indice_para_apostar) && (plO_por_odds <  CONFIG.minimo_indice_para_apostar)	  ) return;
                     
                     if (plO_por_odds >=  CONFIG.minimo_indice_para_apostar) {
 						var percent_da_banca=plO_por_odds * CONFIG.percentual_de_kelly;                    
