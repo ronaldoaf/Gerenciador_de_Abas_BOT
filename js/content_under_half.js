@@ -244,13 +244,13 @@ bot.apostar=function(selObj, percent_da_banca){
 
 //---Toda vez que as estatisticas do arquivo JSON forem carregadas
 bot.onLoadStats=function(response){
-   
+
    bot.apostando_agora=false;
    //bot.lista_de_apostas=[];
    
-   //console.log(response);
+
    var jogos=eval(response);
-   //console.log(jogos);
+
 
    //Se o flag bot.apostando_agora estiver true, não tenta aposta
    //if(bot.apostando_agora) return;
@@ -373,27 +373,23 @@ bot.onLoadStats=function(response){
 
 //---A cada 30 segundos
 setInterval(function(){		
-       console.log('on30segs');
-	     
-	
-	
-	   //Faz um ajax para o arquivo JSON "http://aposte.me/live/stats.php"
-	   GM_xmlhttpRequest({
-		   method: "GET",
-		   url: "http://bot-ao.com/stats1.json?t="+time_,
-		   headers: { 
-			   'Accept': "*/*; charset=utf-8",
-		   },
-		   onload: function(response){
-			 bot.onLoadStats(response);   
-			    
-             
-			//Pega o valor da banca disponível
-            $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
-                   bot.balance=Number(res.split('$')[2]); 
-               });
-           }
-	   });    
+    console.log('on30segs');
+     
+
+
+    //Faz um ajax para o arquivo JSONP "http://aposte.me/live/stats.js  que executará a função bot.onLoadStats()"
+    $.getScript('https://bot-ao.com/stats.js', function(){
+        bot.onLoadStats(localStorage.stats);
+        //Pega o valor da banca disponível
+        $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
+            bot.balance=Number(res.split('$')[2]); 
+        });
+        
+    });
+         
+    
+
+   
 },30000);
 
 
