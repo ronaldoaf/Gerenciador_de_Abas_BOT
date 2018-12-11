@@ -300,14 +300,14 @@ bot.onLoadStats=function(response){
                      var probUnder=1.0/j_sel.odds_Under/(1.0/j_sel.odds_Under + 1.0/j_sel.odds_Over);
 		
                
-                    s_g=j.gHf+j.gAf;
-                    s_c=j.cHf+j.cAf;
-                    s_da=j.daHf+j.daAf;
-                    s_s=j.soHf+j.soAf+j.sfHf+j.sfAf;
-                    d_g=Math.abs(j.gHf-j.gAf);
-                    d_c=Math.abs(j.cHf-j.cAf);
-                    d_da=Math.abs(j.daHf-j.daAf);
-                    d_s=Math.abs( (j.soHf+j.sfHf)-(j.soAf+j.sfAf) );
+                    s_g=j.gh+j.ga;
+                    s_c=j.ch+j.ca;
+                    s_da=j.dah+j.daa;
+                    s_s=j.sh+j.sa;
+                    d_g=Math.abs(j.gh-j.ga);
+                    d_c=Math.abs(j.ch-j.ca);
+                    d_da=Math.abs(j.dah-j.daa);
+                    d_s=Math.abs( j.sh-j.sa);
                     goal=goalline;
                     goal_diff=goalline-s_g;
                     oddsU=1.0*j_sel.odds_Under;
@@ -318,6 +318,7 @@ bot.onLoadStats=function(response){
                     mod25=Number(goalline%1==0.25);
                     mod50=Number(goalline%1==0.50);
                     mod75=Number(goalline%1==0.75);
+                    
         
                     eval(localStorage.FORMULA2);
 	
@@ -378,7 +379,7 @@ setInterval(function(){
 
 
     //Faz um ajax para o arquivo JSONP "http://aposte.me/live/stats.js  que executará a função bot.onLoadStats()"
-    $.getScript('https://bot-ao.com/stats.js', function(){
+    $.getScript('https://bot-ao.com/stats2.js', function(){
         bot.onLoadStats(localStorage.stats);
         //Pega o valor da banca disponível
         $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
@@ -433,5 +434,3 @@ window.setInterval(function(){
 
 
 });
-
-
