@@ -231,6 +231,8 @@ bot.apostar=function(selObj, percent_da_banca){
 	bot.apostando_agora=true;
 	selObj.click();
 	$.waitFor('.qb-StakeBox', function(){
+        //Usa os creditos
+        if( $('.qb-UseBetCredits_CheckBox:not(.qb-UseBetCredits_CheckBox-selected)').size()>0 ) $('.qb-UseBetCredits_CheckBox').click();
 		bot.digitaStake(bot.stake(percent_da_banca));
 	});
 
