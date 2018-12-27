@@ -18,10 +18,10 @@ var variancias={
 	o50:0.89,
 	o75:0.68,
 	
-	u00:0.52,
-	u25:0.64,
-	u50:0.88,
-	u75:0.89	
+	u00:0.58,
+	u25:0.58,
+	u50:0.78,
+	u75:0.78	
 };
 
 
@@ -310,6 +310,7 @@ bot.onLoadStats=function(response){
                     d_c=Math.abs(j.ch-j.ca);
                     d_da=Math.abs(j.dah-j.daa);
                     d_s=Math.abs( j.sh-j.sa);
+					s_r=j.rh+j.ra;
                     goal=goalline;
                     goal_diff=goalline-s_g;
                     oddsU=1.0*j_sel.odds_Under;
