@@ -274,11 +274,14 @@ bot.onLoadStats=function(response){
 		   
 			 if(  (ns(jogo.home)==ns(home)) && (ns(jogo.away)==ns(away)) ){
 				   
+                   //console.log(jogo.tempo);
 				   //Se a aba myBets não foi atualiza nos últimos 2 segundos sai;
 				   if( ( +new Date() ) - Number(localStorage.myBetsLastUpdate) >2000) return;
 				   
 				   //Senão estiver no half time sai
-                   if( jogo.time != 'half') return;                   
+                   if( jogo.time != 'half') return;   
+                     
+                   
                    //Se tiver cartão vermelho sai
                    if( (jogo.rHf+jogo.rAf )>0) return;   
                    //Se quase não tiver ataque perigosos sai, porque pode ser um jogo com erro nos dados
@@ -292,6 +295,7 @@ bot.onLoadStats=function(response){
 				   //Se o elemento DOM da linha do jogo 
 				   jogo_selecionado=bot.jogoLive(home,away);
                    
+                   if( jogo_selecionado.tempo != 45) return; 
                    
 					j=jogo;
                     j_sel=jogo_selecionado;
@@ -382,7 +386,7 @@ setInterval(function(){
 
 
     //Faz um ajax para o arquivo JSONP "http://aposte.me/live/stats.js  que executará a função bot.onLoadStats()"
-    $.getScript('https://bot-ao.com/stats2.js', function(){
+    $.getScript('https://bot-ao.com/stats.js', function(){
         bot.onLoadStats(localStorage.stats);
         //Pega o valor da banca disponível
         $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
