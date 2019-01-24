@@ -281,9 +281,7 @@ bot.onLoadStats=function(response){
 				   //Senão estiver no half time sai
                    if( jogo.time != 'half') return;   
                      
-                   
-                   //Se tiver cartão vermelho sai
-                   if( (jogo.rHf+jogo.rAf )>0) return;   
+                  
                    //Se quase não tiver ataque perigosos sai, porque pode ser um jogo com erro nos dados
                    if( (jogo.daHf+jogo.daAf )<5) return;  
                                    
@@ -386,7 +384,7 @@ setInterval(function(){
 
 
     //Faz um ajax para o arquivo JSONP "http://aposte.me/live/stats.js  que executará a função bot.onLoadStats()"
-    $.getScript('https://bot-ao.com/stats.js', function(){
+    $.getScript(localStorage.bot365_new==='1'? 'https://bot-ao.com/stats_new.js' : 'https://bot-ao.com/stats.js', function(){
         bot.onLoadStats(localStorage.stats);
         //Pega o valor da banca disponível
         $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
