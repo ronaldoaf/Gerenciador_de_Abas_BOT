@@ -2,15 +2,20 @@ var CONFIG;
 
 
 
-$.waitFor=function(elemento, func){
+$.waitFor=function(elemento, func, timeout=15000){
+	var cont=0;
 	var loopWait=setInterval(function(){
 		if( $(elemento).size()==1){
 			clearInterval(loopWait);
 			func();
 		}
+		cont=+100;
+		if (cont>=timeout) clearInterval(loopWait);
 	},100);	
 	
-}
+};
+
+
 
 var variancias={
 	o00:0.42,
@@ -223,6 +228,9 @@ bot.digitaStake=function(valor){
 		delay+=100;
 		setTimeout(function(){
 			$('.qb-PlaceBetButton').click();
+			$.waitFor('.qb-PlaceBetButton:contains(Refer)',function(){
+				$('.qb-PlaceBetButton').click();
+			});
 		},delay);	
 	});
 }
