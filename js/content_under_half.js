@@ -136,7 +136,7 @@ bot.stake=function(percent_da_banca){
     
     var indicador=+((percent_da_banca*5).toFixed(2));
 	//return (Math.floor(soma*bot.fila_de_apostas[0].percent_da_banca)+0.25);
-    return (Math.floor(soma*percent_da_banca)+indicador);
+    return CONFIG.stake_fixo ? CONFIG.stake : (Math.floor(soma*percent_da_banca)+indicador);
 };
 
 bot.jogoLive = function (home,away){
