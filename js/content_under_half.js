@@ -431,20 +431,32 @@ unsafeWindow.setInterval(function(){
 	//bot.interativo();
 	
 	
-	//Se o quickBet fica em suspenso, não se pode apostar e clica no Cancel X, para fechar 
+	//Se o quickBet fica em suspenso, não se pode apostar e clica no Cancel X, para fechar o
 	if( $('.qb-QuickBetModule').hasClass('qb-QuickBetModule_ChangeSuspended') ) $('.qb-MessageContainer_IndicationMessage:contains(Cancel)').click();
 	if( $('.qb-QuickBetModule').hasClass('qb-QuickBetModule_PlacedNoneAus') )  $('.qb-MessageContainer_IndicationMessage:contains(Cancel)').click();
+	if( $('.qb-QuickBetModule').hasClass('qb-QuickBetModule_ChangeOdds') ) $('.qb-PlaceBetButton ').click();
+	
     if( $('.qb-QuickBetModule').hasClass('qb-QuickBetModule_PlaceBetFailed') )  {
-		if ( $('.qb-Header_MainText:contains("available maximum")').size()>0  ){
+		if ( ($('.qb-Header_MainText:contains("available maximum")').size()>0) ){
 			var stake_max=Number( $('.qb-Header_MainText:contains("available maximum")').text().split('of ')[1] );
-			bot.digitaStake(stake_max);
+			if (stake_max>0) {
+				bot.digitaStake(stake_max);
+			}
+			else{
+				$('.qb-MessageContainer_IndicationMessage:contains(Cancel)').click();
+			}
 		}
 		else {
 			$('.qb-MessageContainer_IndicationMessage:contains(Cancel)').click();	
 		}
 	}
 
-},1000);
+},2000);
+
+
+
+
+
 
 
 //A cada 15 minutos recarrega a pagina
