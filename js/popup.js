@@ -43,9 +43,7 @@ $(document).ready(function() {
 			config={		
 				minimo_indice_para_apostar:0.01,
 				percentual_de_kelly:0.75,
-				maximo_da_banca_por_aposta:0.17,
-				stake_fixo: false,
-				stake: 10.0
+				maximo_da_banca_por_aposta:0.17
 			};		
 			chrome.storage.sync.set({config:config});		
 			

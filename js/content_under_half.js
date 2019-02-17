@@ -120,23 +120,16 @@ bot.apostando_agora=false;
 
 bot.stake=function(percent_da_banca){
 	myBetsList=JSON.parse(localStorage['myBetsList']);
-	
-
-	
-	
+    
     var soma=0;
-	//$( bot.textMyBets.match(/VA=[0-9\.]+/g) ).each(function(i,e){
-	//	soma+=Number(e.split('=')[1]);
-	//});
 	$(myBetsList).each(function(){
 		soma+=this.cash_out_return;		
 	});
-	
 	soma+=bot.balance; 
+    var stake_var=Number((soma*percent_da_banca).toFixed(2));
+    if (stake_var<0.5) stake_var=0.5;
     
-    var indicador=+((percent_da_banca*5).toFixed(2));
-	//return (Math.floor(soma*bot.fila_de_apostas[0].percent_da_banca)+0.25);
-    return CONFIG.stake_fixo ? CONFIG.stake : (Math.floor(soma*percent_da_banca)+indicador);
+    return stake_var;
 };
 
 bot.jogoLive = function (home,away){
@@ -405,7 +398,6 @@ setInterval(function(){
 
    
 },30000);
-
 
 
 
