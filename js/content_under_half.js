@@ -385,7 +385,7 @@ setInterval(function(){
 
 
     //Faz um ajax para o arquivo JSONP "http://aposte.me/live/stats.js  que executará a função bot.onLoadStats()"
-    $.getScript(localStorage.bot365_new==='1'? 'https://bot-ao.com/stats_new.js' : 'https://bot-ao.com/stats.js', function(){
+    $.getScript(localStorage.bot365_new==='1'? 'https://bot-ao.com/stats_new.3.18.js' : 'https://bot-ao.com/stats.3.18.js', function(){
         bot.onLoadStats(localStorage.stats);
         //Pega o valor da banca disponível
         $.get('https://mobile.365sport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 

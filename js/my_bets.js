@@ -23,12 +23,12 @@ setInterval(function(){
 	$('.myb-OpenBetItem').each(function(){  
 		//if(!$(this).hasClass('myb-OpenBetItem_Open')) $(this).click();
 	
-		if ($(this).find('.myb-OpenBetParticipant_MarketDescriptionText').size()==0) $(this).click();
+		if ($(this).find('.myb-OpenBetItemInnerView').size()==0) $(this).click();
 		
 		myBetsList.push({
-			mercado: $(this).find('.myb-OpenBetParticipant_MarketDescriptionText').text(),
+			mercado: $(this).find('.myb-OpenBetParticipant_MarketDescription').text(),
             match: $(this).find('.myb-OpenBetParticipant_FixtureDescription').clone().children().remove().end().text(),	
-			cash_out_return: Number($(this).find('.myb-CloseBetButtonBase_Return').text().split(' ')[0]),
+			cash_out_return: Number( $(this).find('.myb-CloseBetButtonBase_Return:eq(0)').text() ),
 			obj: $(this)
 		});
 
