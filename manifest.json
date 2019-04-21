@@ -13,7 +13,7 @@
    },
    "manifest_version": 2,
    "name": "Bot365 v2",
-   "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/","https://mobile.365sport365.com/*", "http://bot-ao.com/*", "http://clanvila.ml/*" ],
+   "permissions": [ "storage","webNavigation","tabs", "chrome://favicon/","https://mobile.365sport365.com/*", "http://bot-ao.com/*", "webRequest","webRequestBlocking" ],
    "version": "3.18.0",
    "web_accessible_resources": [ "images/*" ],
    "background": {

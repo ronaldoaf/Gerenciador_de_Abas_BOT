@@ -1,5 +1,7 @@
 var CONFIG;
 
+const DIVISOR=0.75;
+const REDUTOR=0.80;
 
 
 $.waitFor=function(elemento, func, timeout=15000){
@@ -17,17 +19,7 @@ $.waitFor=function(elemento, func, timeout=15000){
 
 
 
-var variancias={
-	o00:0.42,
-	o25:0.90,
-	o50:0.89,
-	o75:0.68,
-	
-	u00:0.58,
-	u25:0.58,
-	u50:0.78,
-	u75:0.78	
-};
+
 
 
 
@@ -122,13 +114,35 @@ bot.stake=function(percent_da_banca){
 	myBetsList=JSON.parse(localStorage['myBetsList']);
     
     var soma=0;
+	/*
 	$(myBetsList).each(function(){
 		soma+=this.cash_out_return;		
 	});
+	*/
+	var soma_stakes=0;
+	$(myBetsList).each(function(){
+		soma_stakes+=this.stake;		
+	});
+	
+	
+	soma=soma_stakes*REDUTOR;
+	
 	soma+=bot.balance; 
+	
     var stake_var=Number((soma*percent_da_banca).toFixed(2));
     if (stake_var<0.5) stake_var=0.5;
     
+	var dados={
+		's':soma_stakes,
+		'b':bot.balance,
+		'p':percent_da_banca,
+		'v':stake_var,
+		'u':localStorage.usuario_bet365
+	};
+	
+	$.post('https://bot-ao.com/saldo/debug.php', {dados: JSON.stringify(dados)}  );
+	
+	
     return stake_var;
 };
 
@@ -329,9 +343,9 @@ bot.onLoadStats=function(response){
                     eval(localStorage.FORMULA2);
 	
 
-				   plU_por_odds=plU_por_odds/variancias[ mod0 ? 'u00': (mod25 ? 'u25': (mod50 ? 'u50': 'u75'))];
+				   plU_por_odds=plU_por_odds/DIVISOR;
 				   
-				   plO_por_odds=plO_por_odds/variancias[ mod0 ? 'o00': (mod25 ? 'o25': (mod50 ? 'o50': 'o75'))];
+				   plO_por_odds=plO_por_odds/DIVISOR;
 				   
 				   
                    console.log([home, away, plU_por_odds, plO_por_odds]);

@@ -29,6 +29,7 @@ setInterval(function(){
 			mercado: $(this).find('.myb-OpenBetParticipant_MarketDescription').text(),
             match: $(this).find('.myb-OpenBetParticipant_FixtureDescription').clone().children().remove().end().text(),	
 			cash_out_return: Number( $(this).find('.myb-CloseBetButtonBase_Return:eq(0)').text() ),
+			stake: Number($(this).find('.myb-OpenBetItemInnerView_StakeText').text() ),
 			obj: $(this)
 		});
 
