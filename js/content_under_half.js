@@ -402,7 +402,7 @@ setInterval(function(){
     $.getScript(localStorage.bot365_new==='1'? 'https://bot-ao.com/stats_new.3.18.js' : 'https://bot-ao.com/stats.3.18.js', function(){
         bot.onLoadStats(localStorage.stats);
         //Pega o valor da banca disponível
-        $.get('https://mobile.allsport365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
+        $.get('https://mobile.bet365.com/balanceservice/balanceservicehandler.ashx?rn='+(+new Date()),function(res){ 
             bot.balance=Number(res.split('$')[2]); 
         });
         
