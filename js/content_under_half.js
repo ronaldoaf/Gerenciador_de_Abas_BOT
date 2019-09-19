@@ -339,7 +339,7 @@ bot.onLoadStats=function(response){
                     mod50=Number(goalline%1==0.50);
                     mod75=Number(goalline%1==0.75);
                     
-        
+                    console.log([s_g,s_c,s_da,s_s,s_r,d_g,d_c,d_da,d_s,goal,goal_diff,oddsU,probU_diff,mod0,mod25,mod50,mod75]);
                     eval(localStorage.FORMULA2);
 	
 
